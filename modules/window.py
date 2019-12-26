@@ -47,10 +47,3 @@ def get_out_path():
 
 out_path_button = Button(window,text='Click to select file',command=get_out_path, width=30)
 out_path_button.grid(row=1,column=2)
-
-
-#         #
-# TESTING #
-#         #
-
-window.mainloop()
