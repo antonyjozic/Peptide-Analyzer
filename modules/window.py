@@ -2,9 +2,15 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox, scrolledtext
 from tkinter.filedialog import askopenfilename, askdirectory
+from modules.analysis import *
+import sys, os
 
-import sys
-import os
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
+
+import numpy as np
 
 
 #####################################################################################################
@@ -15,10 +21,13 @@ import os
 window = tk.Tk()
 
 window.title('Peptide-Analysis Tool')
-window.geometry('600x560')
+window.geometry('646x80')
 
+#trying to change the icon on the window to the one found in the modules folder, can't figure it out
+
+# get path to input file, sequences
 inp_file = Label(window, text="Path to .txt file containing sequences: ")
-inp_file.grid(row=0, column=0, sticky=W)
+inp_file.grid(row=0, column=0)
 
 inp_path_box = Entry(window, width=30)
 inp_path_box.grid(row=0,column=1)
@@ -32,8 +41,10 @@ def get_inp_path():
 inp_path_button = Button(window,text='Click to select file',command=get_inp_path, width=30)
 inp_path_button.grid(row=0,column=2)
 
+
+# get path to output folder
 out_dir = Label(window, text="Path to output directory: ")
-out_dir.grid(row=1, column=0, sticky=W)
+out_dir.grid(row=1, column=0)
 
 out_path_box = Entry(window, width=30)
 out_path_box.grid(row=1,column=1)
@@ -47,3 +58,22 @@ def get_out_path():
 
 out_path_button = Button(window,text='Click to select file',command=get_out_path, width=30)
 out_path_button.grid(row=1,column=2)
+
+def get_inp_filename():
+    filename = inp_path_box.get() 
+    if not filename.endswith('.txt'):
+        return "error, incorrect input filetype"
+    else:
+        return filename
+
+def analyze():
+    #error handle input file to see if it is correct format 
+    fname = get_inp_filename()
+    outpath = out_path_box.get()
+    print(fname)
+    #run main analysis
+    main(fname,outpath)
+    messagebox.showinfo("Peptide Analyzer", "Analysis is complete!")
+
+analysis_button = Button(window,text='Analyze',command=analyze,width=30)
+analysis_button.grid(row=2,column=1)    

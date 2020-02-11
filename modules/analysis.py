@@ -6,13 +6,13 @@ Print_AA = {0:'A', 1:'R', 2:'N', 3:'D', 4:'C', 5:'E', 6:'Q', 7:'G', 8:'H', 9:'I'
 # Read in sequences, return list of sequences and total # of sequences
 def get_seq(filename):
     with open(filename, 'r') as f:
-        seq = 0
+        seq = []
         counter = 0
         for line in f:
             counter += 1
-            seq += line.strip()
+            seq.append(line.strip())
         f.close()
-        return final_seq, counter
+        return seq, counter
 
 # initialize the final list, a matrix to present positional occurances of AA residues in a given sequence
 def init_final_list(seq_length):
@@ -49,11 +49,12 @@ def new_seq(final_list, seqlength):
     return newSeq
 
 # prints the matrices to an output.txt file, if no file is present, it will create one
-def print_list(a_list, seqlength, mode):
-    with open("output.txt", mode) as f:
+def print_list(a_list, seqlength, mode, out_path):
+    path = out_path + "/peptide-analysis-output.txt"
+    with open(path, mode) as f:
         if mode == 'a':
             newseq = new_seq(a_list, seqlength)
-            f.write('SEQUENCE COMPRISED OF HIGHEST OCCURING AMINO ACIDS IN EACH POSITION: ' + newseq + '\n'
+            f.write('SEQUENCE COMPRISED OF HIGHEST OCCURING AMINO ACIDS IN EACH POSITION: ' + newseq + '\n')
             f.write('\n\n')
             f.write('COUNTS NORMALIZED TO TOTAL # OF SEQUENCES: \n')
         elif mode == 'w':
@@ -88,3 +89,13 @@ def normalize_list(final_list, seqlength, numseq):
         for y in range(seqlength):
             divided_list[x][y] = final_list[x][y] / numseq
     return divided_list
+
+def main(fname,out_path):
+    seqs, numseq = get_seq(fname)
+    seqlength = len(seqs[0])
+    final_list = init_final_list(seqlength)
+    counts = count_residues(seqs,final_list)
+    normalized = normalize_list(final_list,seqlength,numseq)
+    print_list(counts,seqlength, 'w',out_path)
+    print_list(normalized,seqlength, 'a',out_path)
+    return None
