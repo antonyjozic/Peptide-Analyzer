@@ -1,4 +1,7 @@
 import re
+import matplotlib.pyplot as plt
+import matplotlib.font_manager
+import numpy as np
 
 AA = {'A':0,'R':1,'N':2,'D':3,'C':4,'E':5,'Q':6,'G':7,'H':8,'I':9,'L':10,'K':11,'M':12,'F':13,'P':14,'S':15,'T':16,'W':17,'Y':18,'V':19}
 Print_AA = {0:'A', 1:'R', 2:'N', 3:'D', 4:'C', 5:'E', 6:'Q', 7:'G', 8:'H', 9:'I', 10:'L', 11:'K', 12:'M', 13:'F', 14:'P', 15:'S', 16:'T', 17:'W', 18:'Y', 19:'V'}
@@ -90,6 +93,41 @@ def normalize_list(final_list, seqlength, numseq):
             divided_list[x][y] = final_list[x][y] / numseq
     return divided_list
 
+#plots proportional occurence of amino acids at each position in the peptide
+def plot_heatmap(final_list, seqlength, outpath, fname):
+    plot_list = []
+    for i in range(len(final_list)):
+        plot_list.append(np.array(i))
+    
+    plot_list = np.array(plot_list)
+    plt.imshow(final_list, cmap=plt.cm.OrRd, interpolation='nearest')
+    
+    xticks = []
+    for x in range(seqlength):
+        xticks.append(str(x+1))
+
+    plt.yticks([*Print_AA],[*AA])
+    plt.xticks(range(seqlength),xticks)
+    
+    plt.title('Positional Occurence of Amino Acids')
+    plt.xlabel('Position in ' + str(seqlength) +'mer')
+    plt.ylabel('Amino Acid')
+
+    plt.colorbar()
+
+    plt.show()
+    return None
+
+def check_input_file(fname):
+    with open(fname) as f:
+        for line in f:
+            x = line.strip()
+            for char in x:
+                if char not in AA:
+                    raise Exception("Input file is not properly formatted")
+                    break
+        return None
+
 def main(fname,out_path):
     seqs, numseq = get_seq(fname)
     seqlength = len(seqs[0])
@@ -98,4 +136,5 @@ def main(fname,out_path):
     normalized = normalize_list(final_list,seqlength,numseq)
     print_list(counts,seqlength, 'w',out_path)
     print_list(normalized,seqlength, 'a',out_path)
+    plot_heatmap(normalized, seqlength, out_path, fname)
     return None

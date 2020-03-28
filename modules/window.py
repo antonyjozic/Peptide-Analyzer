@@ -5,12 +5,12 @@ from tkinter.filedialog import askopenfilename, askdirectory
 from modules.analysis import *
 import sys, os
 
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
+#from matplotlib.backends.backend_tkagg import (
+#    FigureCanvasTkAgg, NavigationToolbar2Tk)
+#from matplotlib.backend_bases import key_press_handler
+#from matplotlib.figure import Figure
 
-import numpy as np
+#import numpy as np
 
 
 #####################################################################################################
@@ -66,14 +66,18 @@ def get_inp_filename():
     else:
         return filename
 
-def analyze():
-    #error handle input file to see if it is correct format 
+def analyze(): 
     fname = get_inp_filename()
     outpath = out_path_box.get()
-    print(fname)
-    #run main analysis
+    
+    try:
+        check_input_file(fname)
+    except:
+        messagebox.showinfo("Error!!!","Input file is not correct format. See README.txt for details.")
+        window.destroy()
+        return None
+    
     main(fname,outpath)
-    messagebox.showinfo("Peptide Analyzer", "Analysis is complete!")
 
 analysis_button = Button(window,text='Analyze',command=analyze,width=30)
 analysis_button.grid(row=2,column=1)    
