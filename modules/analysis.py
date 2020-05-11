@@ -2,6 +2,7 @@ import re
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
 import numpy as np
+import scipy
 
 AA = {'A':0,'R':1,'N':2,'D':3,'C':4,'E':5,'Q':6,'G':7,'H':8,'I':9,'L':10,'K':11,'M':12,'F':13,'P':14,'S':15,'T':16,'W':17,'Y':18,'V':19}
 Print_AA = {0:'A', 1:'R', 2:'N', 3:'D', 4:'C', 5:'E', 6:'Q', 7:'G', 8:'H', 9:'I', 10:'L', 11:'K', 12:'M', 13:'F', 14:'P', 15:'S', 16:'T', 17:'W', 18:'Y', 19:'V'}
@@ -109,7 +110,7 @@ def plot_heatmap(final_list, seqlength, outpath, fname):
     plt.yticks([*Print_AA],[*AA])
     plt.xticks(range(seqlength),xticks)
     
-    plt.title('Positional Occurence of Amino Acids')
+    plt.title('Proportional Occurence of Amino Acids')
     plt.xlabel('Position in ' + str(seqlength) +'mer')
     plt.ylabel('Amino Acid')
 
@@ -127,6 +128,19 @@ def check_input_file(fname):
                     raise Exception("Input file is not properly formatted")
                     break
         return None
+
+def needle_wunsch():
+    #  for x in range(length A)
+    #   
+    #
+    #
+    #
+    #
+    #
+    #
+
+
+    return None
 
 def main(fname,out_path):
     seqs, numseq = get_seq(fname)
