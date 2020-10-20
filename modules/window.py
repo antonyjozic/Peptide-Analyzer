@@ -13,10 +13,6 @@ import sys, os
 #import numpy as np
 
 
-#####################################################################################################
-#   This is going to be where we write all the functions involving windows, buttons within it, etc  #
-#   Also stuff like getting the file path to the input .txt or .csv, and path to an output file     #
-#####################################################################################################
 
 window = tk.Tk()
 
