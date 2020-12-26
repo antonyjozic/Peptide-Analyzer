@@ -1,8 +1,10 @@
-import re
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
 import numpy as np
-import scipy
+import Bio
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.Align import MultipleSeqAlignment as MSA
 
 AA = {'A':0,'R':1,'N':2,'D':3,'C':4,'E':5,'Q':6,'G':7,'H':8,'I':9,'L':10,'K':11,'M':12,'F':13,'P':14,'S':15,'T':16,'W':17,'Y':18,'V':19}
 Print_AA = {0:'A', 1:'R', 2:'N', 3:'D', 4:'C', 5:'E', 6:'Q', 7:'G', 8:'H', 9:'I', 10:'L', 11:'K', 12:'M', 13:'F', 14:'P', 15:'S', 16:'T', 17:'W', 18:'Y', 19:'V'}
@@ -41,7 +43,7 @@ def count_residues(seq, final_list):
         counter += 1
     return final_list
 
-# returns sequence comprised of highest occuring amino acids at each position
+# returns consensus sequence comprised of highest occuring amino acids at each position
 def new_seq(final_list, seqlength):
     newSeq = ""
     for x in range(seqlength):
@@ -128,20 +130,62 @@ def check_input_file(fname):
                     raise Exception("Input file is not properly formatted")
                     break
         return None
+#
+# Implement this complexity function to check how complex each sequence is.
+#
+def comp(seq):
+    for x in seq:
+        AA[x] +=1
+    
+    count = 0
+    temp = 0.0
+    running = 0.0
+    for k in AA:
+        if count == 0:
+            temp = math.factorial(AA[k])
+            count+=1
+        else:
+            running = math.factorial(AA[k])*temp
+            temp = running
 
-def needle_wunsch():
-    #  for x in range(length A)
-    #   
-    #
-    #
-    #
-    #
-    #
-    #
+    comp = (1/7)*math.log(((math.factorial(7))/running),20)
+    return comp
 
+def average(li):
+    run = 0.0
+    for x in li:
+        run += x
 
-    return None
+    return run/len(li)
 
+def check_type(seqlist: list()) -> bool():
+    for seq in seqlist:
+        if type(seq) == Bio.SeqRecord.SeqRecord:
+            continue
+        else:
+            return False
+    return True
+
+def mult_seq_align(inp_peptides: list()) -> list:
+    seq_rec_list = []
+    if check_type(peptide) == False:
+        for peptide in inp_peptides:
+            seq_rec_list.append(SeqRecord(peptide))
+    else:
+        seq_rec_list = inp_peptides 
+    aligned = MSA(seq_rec_list)
+
+    f_aligned = []
+    for seq in aligned:
+        f_aligned.append(seq.seq)
+    return f_aligned
+
+#what more information can be gained?
+#   - alignment can give information about sequence homology -- MSA
+#   - MD can give information about how the peptide sequence might interact with a receptor
+#       - can also use the approach data to fine-tune a specific sequence for further testing
+#   - clustering the AA based on local alignments can help differentiate the into peptide characteristics (hydrophobicity, etc)
+#       - find a way to plot this quantitatively, then use k-means clustering.
 def main(fname,out_path):
     seqs, numseq = get_seq(fname)
     seqlength = len(seqs[0])
