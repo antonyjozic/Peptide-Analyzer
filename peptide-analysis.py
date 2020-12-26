@@ -1,4 +1,3 @@
-
 #Peptide-Analysis Tool
 #Authors: Antony Jozic & Toshiki Chiba
 

@@ -186,6 +186,7 @@ def mult_seq_align(inp_peptides: list()) -> list:
 #       - can also use the approach data to fine-tune a specific sequence for further testing
 #   - clustering the AA based on local alignments can help differentiate the into peptide characteristics (hydrophobicity, etc)
 #       - find a way to plot this quantitatively, then use k-means clustering.
+
 def main(fname,out_path):
     seqs, numseq = get_seq(fname)
     seqlength = len(seqs[0])
