@@ -7,4 +7,5 @@ from modules.analysis import *
 
 
 if __name__ == "__main__":
+    main('test.txt','.')
     window.mainloop()
