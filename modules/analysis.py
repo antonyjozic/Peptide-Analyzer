@@ -1,10 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
 import numpy as np
-import Bio
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-from Bio.Align import MultipleSeqAlignment as MSA
+import math
 
 
 AA = {'A':0,'R':1,'N':2,'D':3,'C':4,'E':5,'Q':6,'G':7,'H':8,'I':9,'L':10,'K':11,'M':12,'F':13,'P':14,'S':15,'T':16,'W':17,'Y':18,'V':19}
