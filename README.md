@@ -2,12 +2,10 @@
 A GUI-based utility that provides visualization for the positional occurrence of amino acids in aligned peptide sequences.
 
 ## Overview
-#
 
 The program currently only provides visualization for the positional occurrence of amino acids as well as normalized positional occurence. In the future there will be additional functionality including clustering of peptide sequences to identify similar characteristics.
 
 ## Installation & Usage
-#
 
 1. Clone the repository into a directory.
 2. Open a terminal, navigate to the 'Peptide-Analyzer-master' folder.
