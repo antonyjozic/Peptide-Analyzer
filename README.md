@@ -17,3 +17,4 @@ This will bring up a GUI window where the input file can be chosen, as well as a
 # TO-DO:
 1. Identify methods by which 2D clustering can be applied to sequences
 2. Implement a more thorough analysis of the aligned sequences, add support for '-' characters to account for gaps in the alignment.
+3. Write tests!
